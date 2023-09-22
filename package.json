@@ -1,0 +1,24 @@
+{
+  "name": "app-ecr-ecs",
+  "version": "1.0.0",
+  "description": "Run app on ECR&ECS",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HirsaVladislav/node-app-ecr-ecs.git"
+  },
+  "author": "Khyrsa Vladyslav",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HirsaVladislav/node-app-ecr-ecs/issues"
+  },
+  "homepage": "https://github.com/HirsaVladislav/node-app-ecr-ecs#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
+  }
+}
