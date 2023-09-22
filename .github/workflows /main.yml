@@ -1,10 +1,15 @@
-  # upload the app docker image to AWS ECR
-  push_to_AWS_ECR:
-    name: Deploy docker image to AWS ECR
-    runs-on: ubuntu-latest
+  name: ECR&ECS
 
-    # run this job only if the app build and test successfully
-    needs: [build_test]
+on:
+  push:
+    branches:
+    - main
+  
+  # upload the app docker image to AWS ECR
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
 
     steps:
     - name: Checkout
