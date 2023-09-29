@@ -51,3 +51,16 @@ jobs:
 
       - name: Create a deployment archive
         run: cd ./.github/deploy && zip -r ../../deploy.zip ./
+
+       - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v19
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: eu-central-1
+          application_name: eb-env
+          environment_name: eb_env
+          version_label: eb_env-version-${{ steps.version.outputs.version }}
+          use_existing_version_if_available: true
+          wait_for_deployment: true
+          deployment_package: ./deploy.zip
