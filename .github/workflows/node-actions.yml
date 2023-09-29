@@ -58,7 +58,7 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: eu-central-1
-          application_name: eb-env
+          application_name: eb-app
           environment_name: eb_env
           version_label: eb_env-version-${{ steps.version.outputs.version }}
           use_existing_version_if_available: true
