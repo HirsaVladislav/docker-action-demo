@@ -1,0 +1,53 @@
+name: ECR&ECS
+
+on:
+  push:
+    branches:
+    - main
+  
+  # upload the app docker image to AWS ECR
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Version
+        id: version
+        run: echo "version=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Create & Push docker image
+        id: build
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: node-app-ecr-ecs
+          ECR_TAG: ${{ steps.version.outputs.version }}
+          IMAGE_TAG: latest
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          echo "Pushing image to ECR..."
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+      - name: Prepare Dockerrun.aws.json
+        uses: NicoG60/simple-template-renderer@v1
+        env:
+          ECR_IMAGE: ${{ steps.build.outputs.image }}
+        with:
+          input: ./.github/deploy/Dockerrun.aws.json
+
+      - name: Create a deployment archive
+        run: cd ./.github/deploy && zip -r ../../deploy.zip ./
