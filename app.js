@@ -10,6 +10,9 @@ port = process.env.PORT || 3000;
 app.get('/', (req, res) => {
   res.send("hello world!!");
 });
+app.get('/health', (req, res) => {
+  res.send("hello world!!");
+});
 
 // use morgan to log requests to the console
 app.use(morgan('dev')); 
