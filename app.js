@@ -11,7 +11,9 @@ app.get('/', (req, res) => {
   res.send("hello world!!");
 });
 app.get('/health', (req, res) => {
-  res.send("hello world!!");
+  res.send({
+    ok: true
+   });
 });
 
 // use morgan to log requests to the console
