@@ -4,7 +4,7 @@ var morgan      = require('morgan');
 
 var app = express();
 var server = require('http').Server(app);
-port = process.env.PORT || 3000;
+port = process.env.PORT || 80;
 
 // Catch all other routes and return the index file
 app.get('/', (req, res) => {
