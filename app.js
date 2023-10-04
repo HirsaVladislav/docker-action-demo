@@ -1,10 +1,10 @@
 // Get dependencies
-var express     = require('express');
-var morgan      = require('morgan');
+const express     = require('express');
+const morgan      = require('morgan');
 
-var app = express();
-var server = require('http').Server(app);
-port = process.env.PORT || 80;
+const app = express();
+const server = require('http').Server(app);
+const port = process.env.PORT || 80;
 
 // Catch all other routes and return the index file
 app.get('/', (req, res) => {
