@@ -47,7 +47,7 @@ jobs:
         env:
           ECR_IMAGE: ${{ steps.build.outputs.image }}
         with:
-          input: ./.github/deploy/Dockerru.aws.json
+          input: ./.github/deploy/Dockerrun.aws.json
 
       - name: Create a deployment archive
         run: cd ./.github/deploy && zip -r ../../deploy.zip ./
